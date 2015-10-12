@@ -2,8 +2,8 @@ var gulp = require('gulp');
 var webpack = require('webpack-stream');
 var jshint = require('gulp-jshint');
 
-gulp.task('webpack:test', function() {
-  return gulp.src('./app/js/client.js')
+gulp.task('webpack:dev', function() {
+  return gulp.src('./app/js/app.js')
              .pipe(webpack({
                              output: {
                                        filename: 'nibbles.js'
