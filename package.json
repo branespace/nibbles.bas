@@ -1,0 +1,23 @@
+{
+  "name": "nibbles.bas",
+  "version": "0.1.0",
+  "description": "a simple recreation of the qbasic version of snake",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "snake",
+    "nibbles",
+    "qbasic",
+    "game"
+  ],
+  "author": "branespace",
+  "license": "MIT",
+  "devDependencies": {
+    "gulp": "^3.9.0",
+    "gulp-jscs": "^3.0.1",
+    "gulp-jshint": "^1.11.2",
+    "webpack-stream": "^2.1.1"
+  }
+}
