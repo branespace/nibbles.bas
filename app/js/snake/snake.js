@@ -2,7 +2,7 @@ module.exports = exports = Snake;
 
 function Snake(xPos, yPos, xVel, yVel, count) {
   this.head = new SnakeSegment(xPos, yPos, xVel, yVel);
-  this.length = count;
+  this.length = 1;
   this.turns = [];
   for (var i = 0; i < count - 1; i++) {
     this.add();
@@ -24,6 +24,7 @@ Snake.prototype.add = function() {
   }
   temp.next = new SnakeSegment(temp.xPos - temp.xVel, temp.yPos - temp.yVel,
       temp.xVel, temp.yVel);
+  this.length++;
 };
 
 Snake.prototype.move = function(controller) {
@@ -53,16 +54,16 @@ Snake.prototype.move = function(controller) {
 };
 
 SnakeSegment.prototype.setVel = function(direction) {
-  if (direction === 'left') {
+  if (direction === 'left' && this.xVel !== 1) {
     this.yVel = 0;
     this.xVel = -1;
-  } else if (direction === 'right') {
+  } else if (direction === 'right' && this.xVel !== -1) {
     this.yVel = 0;
     this.xVel = 1;
-  } else if (direction === 'up') {
+  } else if (direction === 'up' && this.yVel !== 1) {
     this.yVel = -1;
     this.xVel = 0;
-  } else if (direction === 'down') {
+  } else if (direction === 'down' && this.yVel !== -1) {
     this.yVel = 1;
     this.xVel = 0;
   }
