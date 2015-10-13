@@ -10,4 +10,4 @@ document.onkeydown = function(event) {
   keyboard(event, controller);
 };
 
-require('./game/eventLoop')(config, canvas, controller);
+require('./game/loader')(config, canvas, controller, 0, 0);

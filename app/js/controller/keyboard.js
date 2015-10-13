@@ -8,6 +8,7 @@ module.exports = exports = function(event, controller) {
     controller.left();
   } else if (event.keyCode == '39' || event.keyCode == '76') {
     controller.right();
+  } else if (event.keyCode == '32') {
+    controller.pauseGame();
   }
-
 };

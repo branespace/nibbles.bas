@@ -1,5 +1,7 @@
 module.exports = exports = {
   next: null,
+  pause: false,
+  restart: null,
   up: function() {
     this.next = 'up';
   },
@@ -11,5 +13,13 @@ module.exports = exports = {
   },
   right: function() {
     this.next = 'right';
+  },
+  pauseGame: function() {
+    if (!this.pause) {
+      this.pause = true;
+    } else {
+      window.requestAnimationFrame(this.restart);
+      this.pause = false;
+    }
   }
 };
