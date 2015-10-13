@@ -1,7 +1,7 @@
 module.exports = exports = {
   scale: 10,
-  timeStep: 150,
+  timeStep: 80, //120
   minTimeStep: 25,
-  startLength: 10,
-  eatAddLength: 4
+  eatAddLength: 4,
+  foodPerLevel: 10
 };

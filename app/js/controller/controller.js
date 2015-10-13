@@ -18,8 +18,8 @@ module.exports = exports = {
     if (!this.pause) {
       this.pause = true;
     } else {
-      window.requestAnimationFrame(this.restart);
       this.pause = false;
+      this.restart();
     }
   }
 };

@@ -2,19 +2,31 @@ var animate = require('../animation/animate');
 var collider = require('./collider');
 var makeFood = require('../food/makeFood');
 var text = require('../animation/text');
+var loader = require('./loader');
 
 module.exports = exports = function(config, canvas, controller, score,
     statics, snake, level, food) {
+  if (!level) {
+    controller.pause = true;
+    controller.restart = newGame;
+    return text(canvas, score, 'Victory!\nOm Nom Nom!\nScore: ' + score +
+        '\nPress Space to Play Again', config);
+  }
   var lastUpdate = Date.now();
   var queuedSegments = 0;
+  var count = config.foodPerLevel;
+  var timeStep = Math.max(config.minTimeStep,
+      config.timeStep - (level.num * 5));
 
-  window.requestAnimationFrame(eventLoop);
+  text(canvas, score, level.id + '\nPress Space', config, true);
+  controller.restart = unPause;
+  controller.pause = true;
 
   function eventLoop() {
     //Check pause control
     if (controller.pause) {
-      text(canvas, score, 'Paused', config);
-      controller.restart = eventLoop;
+      text(canvas, score, 'Paused\nPress Space to Resume', config);
+      controller.restart = unPause;
       return;
     }
     var now = Date.now();
@@ -36,21 +48,39 @@ module.exports = exports = function(config, canvas, controller, score,
       var collision = collider(snake, statics, food, snake.head);
       //Collided with wall or obstacle
       if (collision === -1) {
-        text(canvas, score, 'GAME OVER', config);
+        text(canvas, score, 'GAME OVER\nPress Space to Try Again', config);
+        controller.pause = true;
+        controller.restart = newGame;
         return false;
       //Collided with food object
       } else if (collision === 1) {
-        //Increase game speed
-        if (config.timeStep > config.minTimeStep) {
-          config.timeStep -= 5;
+        //Increase score
+        score += (10 - count + 1) * (level.num + 1);
+        //Increment level
+        if (count === 1) {
+          return require('./loader')(config, canvas, controller,
+              level.num + 1, score);
         }
-        //Make more food, queue segments, increase score
+        count--;
+        //Increase game speed
+        if (timeStep > config.minTimeStep) {
+          timeStep -= 5;
+        }
+        //Make more food, queue segments
         food = makeFood(snake, statics);
         queuedSegments += config.eatAddLength;
-        score += 10;
       }
     }
     window.requestAnimationFrame(eventLoop);
   }
+
+  function unPause() {
+    window.requestAnimationFrame(eventLoop);
+  }
+
+  function newGame() {
+    require('./loader')(config, canvas, controller, 0, 0);
+  }
+
 };
 

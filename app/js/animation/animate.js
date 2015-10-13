@@ -22,3 +22,4 @@ module.exports = function(canvas, snake, statics, food, config) {
 function drawRect(context, x, y, scale) {
   context.fillRect(scale * x, scale * y, scale, scale);
 }
+
