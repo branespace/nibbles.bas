@@ -5,11 +5,11 @@ var text = require('../animation/text');
 var loader = require('./loader');
 
 module.exports = exports = function(config, canvas, controller, score,
-    statics, snake, level, food) {
+    statics, snake, level, food, lives) {
   if (!level) {
     controller.pause = true;
     controller.restart = newGame;
-    return text(canvas, score, 'Victory!\nOm Nom Nom!\nScore: ' + score +
+    return text(canvas, score, lives, 'Victory!\nOm Nom Nom!\nScore: ' + score +
         '\nPress Space to Play Again', config);
   }
   var lastUpdate = Date.now();
@@ -18,14 +18,14 @@ module.exports = exports = function(config, canvas, controller, score,
   var timeStep = Math.max(config.minTimeStep,
       config.timeStep - (level.num * 5));
 
-  text(canvas, score, level.id + '\nPress Space', config, true);
+  text(canvas, score, lives, level.id + '\nPress Space', config, true);
   controller.restart = unPause;
   controller.pause = true;
 
   function eventLoop() {
     //Check pause control
     if (controller.pause) {
-      text(canvas, score, 'Paused\nPress Space to Resume', config);
+      text(canvas, score, lives, 'Paused\nPress Space to Resume', config);
       controller.restart = unPause;
       return;
     }
@@ -43,15 +43,21 @@ module.exports = exports = function(config, canvas, controller, score,
       //Draw objects
       animate(canvas, snake, statics, food, config);
       //Draw score
-      text(canvas, score, null, config);
+      text(canvas, score, lives, null, config);
       //Check collisions
       var collision = collider(snake, statics, food, snake.head);
       //Collided with wall or obstacle
       if (collision === -1) {
-        text(canvas, score, 'GAME OVER\nPress Space to Try Again', config);
-        controller.pause = true;
-        controller.restart = newGame;
-        return false;
+        if (lives === 1) {
+          text(canvas, score, lives, 'GAME OVER\nPress Space to Try Again',
+              config);
+          controller.pause = true;
+          controller.restart = newGame;
+          return false;
+        } else {
+          return require('./loader')(config, canvas, controller,
+              level.num, score, lives - 1);
+        }
       //Collided with food object
       } else if (collision === 1) {
         //Increase score
@@ -59,7 +65,7 @@ module.exports = exports = function(config, canvas, controller, score,
         //Increment level
         if (count === 1) {
           return require('./loader')(config, canvas, controller,
-              level.num + 1, score);
+              level.num + 1, score, lives);
         }
         count--;
         //Increase game speed
@@ -79,7 +85,7 @@ module.exports = exports = function(config, canvas, controller, score,
   }
 
   function newGame() {
-    require('./loader')(config, canvas, controller, 0, 0);
+    require('./loader')(config, canvas, controller, 0, 0, config.lives);
   }
 
 };

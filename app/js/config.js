@@ -3,5 +3,6 @@ module.exports = exports = {
   timeStep: 80, //120
   minTimeStep: 25,
   eatAddLength: 4,
-  foodPerLevel: 10
+  foodPerLevel: 10,
+  lives: 5
 };

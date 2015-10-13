@@ -16,7 +16,7 @@ var levels = [
              ];
 
 module.exports = exports = function(config, canvas, controller,
-    levelnum, score) {
+    levelnum, score, lives) {
   if (levelnum === levels.length) {
     return eventLoop(config, canvas, controller, score, null, null, null, null);
   }
@@ -26,5 +26,6 @@ module.exports = exports = function(config, canvas, controller,
   var statics = level.obstacles.slice();
   buildWall(statics);
   var food = makeFood(snake, statics);
-  eventLoop(config, canvas, controller, score, statics, snake, level, food);
+  eventLoop(config, canvas, controller, score, statics, snake,
+      level, food, lives);
 };

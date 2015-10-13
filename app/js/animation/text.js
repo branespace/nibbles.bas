@@ -1,4 +1,5 @@
-module.exports = exports = function(canvas, score, message, config, clear) {
+module.exports = exports = function(canvas, score, lives, message,
+    config, clear) {
   var ctx = canvas.getContext('2d');
   if (clear) {
     ctx.clearRect(0, 0, config.scale * 80, config.scale * 52);
@@ -11,6 +12,8 @@ module.exports = exports = function(canvas, score, message, config, clear) {
   ctx.fillStyle = 'rgb(255,255,255)';
   ctx.textAlign = 'right';
   ctx.fillText('Score: ' + score, 70 * config.scale, 52 * config.scale);
+  ctx.textAlign = 'left' ;
+  ctx.fillText('Lives: ' + lives, 10 * config.scale, 52 * config.scale);
 
   function multiLine(ctx, canvas, text, px) {
     text = text.split('\n');
