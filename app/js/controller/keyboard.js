@@ -1,5 +1,6 @@
 module.exports = exports = function(event, controller) {
   event = event || window.event;
+  event.preventDefault();
   if (event.keyCode == '38' || event.keyCode == '75') {
     controller.up();
   } else if (event.keyCode == '40' || event.keyCode == '74') {
