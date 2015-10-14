@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>nibbles.bas</title>
+  <link rel='stylesheet' href='css/style.css'>
+</head>
+<body>
+  <canvas id='canvas' width='80' height='52'></canvas>
+  <h1>nibbles.bas</h1>
+  <h3>Guide Sammy to the green apples, but avoid the walls and Sammy's tail!</h3>
+  <p>Left - Left Arrow or h<br/>
+  Right - Right Arrow or l<br/>
+  Up - Up Arrow or k<br/>
+    Down - Down Arrow or j</p>
+
+
+
+    <audio id='eatSoundPlayer' src='sound/nom.wav'></audio>
+    <audio id='levelSoundPlayer' src='sound/level.mp3'></audio>
+    <audio id='collideSoundPlayer' src='sound/collision.mp3'></audio>
+    <audio id='musicPlayer' src='sound/music.mp3'></audio>
+    <audio id='gameOverSoundPlayer' src='sound/gameOver.wav'></audio>
+    <!-- Super secret hidden debug area.  Don't change the class to anything else -->
+    <div id="cheats" class="superSekritHiddenDiv">
+      <h3>Select options and select reset to apply</h3>
+      <button type='button' id='hardcoreMode'>Hardcore Mode</button><br/>
+      <button type='button' id='rainbow'>Rainbow Snake</button><br/>
+      <button type='button' id='lives'>Lots of Lives</button><br/>
+      <button type='button' id='level0'>Level 1</button>
+      <button type='button' id='level1'>Level 2</button>
+      <button type='button' id='level2'>Level 3</button>
+      <button type='button' id='level3'>Level 4</button>
+      <button type='button' id='level4'>Level 5</button>
+      <button type='button' id='level5'>Level 6</button>
+      <button type='button' id='level6'>Level 7</button>
+      <button type='button' id='level7'>Level 8</button>
+      <button type='button' id='level8'>Level 9</button>
+      <button type='button' id='level9'>Level 10</button>
+      <hr/>
+      <button type='button' id='reset'>Restart Game</button>
+    </div>
+  <script src='nibbles.js'></script>
+</body>
+</html>
