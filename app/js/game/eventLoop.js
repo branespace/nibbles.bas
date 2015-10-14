@@ -3,6 +3,7 @@ var collider = require('./collider');
 var makeFood = require('../food/makeFood');
 var text = require('../animation/text');
 var loader = require('./loader');
+var sound = require('../sound/sound');
 
 module.exports = exports = function(config, canvas, controller, score,
     statics, snake, level, food, lives) {
@@ -17,6 +18,7 @@ module.exports = exports = function(config, canvas, controller, score,
   var count = config.foodPerLevel;
   var timeStep = Math.max(config.minTimeStep,
       config.timeStep - (level.num * 5));
+  sound.playNewLevel();
 
   text(canvas, score, lives, level.id + '\nPress Space', config, true);
   controller.restart = unPause;
@@ -25,10 +27,12 @@ module.exports = exports = function(config, canvas, controller, score,
   function eventLoop() {
     //Check pause control
     if (controller.pause) {
+      sound.stopMusic();
       text(canvas, score, lives, 'Paused\nPress Space to Resume', config);
       controller.restart = unPause;
       return;
     }
+    sound.playMusic();
     var now = Date.now();
     if (now - lastUpdate >= config.timeStep) {
       //Set new interval
@@ -48,9 +52,11 @@ module.exports = exports = function(config, canvas, controller, score,
       var collision = collider(snake, statics, food, snake.head);
       //Collided with wall or obstacle
       if (collision === -1) {
+        sound.playCollide();
         if (lives === 1) {
           text(canvas, score, lives, 'GAME OVER\nPress Space to Try Again',
               config);
+          sound.playGameOver();
           controller.pause = true;
           controller.restart = newGame;
           return false;
@@ -60,8 +66,9 @@ module.exports = exports = function(config, canvas, controller, score,
         }
       //Collided with food object
       } else if (collision === 1) {
+        sound.playEat();
         //Increase score
-        score += (10 - count + 1) * (level.num + 1);
+        score += (config.foodPerLevel - count + 1) * (level.num + 1);
         //Increment level
         if (count === 1) {
           return require('./loader')(config, canvas, controller,

@@ -10,4 +10,11 @@ document.onkeydown = function(event) {
   keyboard(event, controller);
 };
 
-require('./game/loader')(config, canvas, controller, 0, 0, config.lives);
+require('./game/cheats')(newGame);
+
+newGame();
+
+function newGame(level) {
+  level = level || 0;
+  require('./game/loader')(config, canvas, controller, level, 0, config.lives);
+}

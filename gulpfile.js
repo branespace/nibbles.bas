@@ -13,7 +13,8 @@ gulp.task('webpack:dev', function() {
 });
 
 gulp.task('staticfiles:dev', function() {
-  return gulp.src(['./app/**/*.html', './app/**/*.css'])
+  return gulp.src(['./app/**/*.html', './app/**/*.css',
+                   './app/**/*.mp3', './app/**/*.wav'])
              .pipe(gulp.dest('build/'));
 });
 

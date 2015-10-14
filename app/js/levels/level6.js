@@ -8,8 +8,8 @@ module.exports = exports = function() {
   }
 
   return new Level({
-        id: '6ash to the End',
-        num: 0,
+        id: 'Dash to the End',
+        num: 6,
         obstacles: obstacles,
         startXPos: 20,
         startXVel: 1,
